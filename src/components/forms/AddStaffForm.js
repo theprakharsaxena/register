@@ -48,12 +48,12 @@ const selectRole = [
 
 export default function AddStaffForm() {
   const [open, setOpen] = React.useState(false);
+  const businessIds = "kbktbFmdvENXoEriN0UD7VboJET2";
   const [data, setData] = React.useState({
-    staffName: "",
-    countryCode: "+91",
-    mobileNumber: "",
-    selectStore: "",
-    selectRole: "",
+    businessId: businessIds,
+    name: "",
+    phone: "",
+    staffId: "",
   });
   function handleChange(e) {
     const newData = { ...data };
@@ -63,15 +63,17 @@ export default function AddStaffForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    Axios.post("http://localhost:5000/api/v1/staff/add", {
-      staffName: data.staffName,
-      countryCode: data.countryCode,
-      mobileNumber: data.mobileNumber,
-      selectStore: data.selectStore,
-      selectRole: data.selectRole,
-    })
+    Axios.post(
+      "http://stock.staging.digitalregister.in:8080/api/v1/staff/add",
+      {
+        businessId: data.businessId,
+        name: data.name,
+        phone: data.phone,
+        staffId: data.staffId,
+      }
+    )
       .then((res) => console.log(res.data))
-      .catch((err) => console.log("Some Error Occured!"));
+      .catch((err) => console.log(err));
   }
 
   const handleClickOpen = () => {
@@ -113,7 +115,7 @@ export default function AddStaffForm() {
                   required
                   fullWidth
                   placeholder="Enter here"
-                  name="staffName"
+                  name="name"
                   variant="outlined"
                   onChange={(e) => handleChange(e)}
                 />
@@ -140,7 +142,7 @@ export default function AddStaffForm() {
                     required
                     fullWidth
                     placeholder="Enter here"
-                    name="mobileNumber"
+                    name="phone"
                     variant="outlined"
                     onChange={(e) => handleChange(e)}
                   />

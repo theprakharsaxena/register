@@ -33,24 +33,24 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 export default function StoreA() {
   const [data, setData] = React.useState([]);
-  const [role, setRole] = React.useState("No Role")
+  // const [response1, setResponse1] = React.useState([]);
+  const [role, setRole] = React.useState("No Role");
   const businessIds = "kbktbFmdvENXoEriN0UD7VboJET2";
 
   React.useEffect(() => {
     getData();
   }, []);
 
-  function getData() {
+  const getData = () => {
     Axios.post(
       "http://stock.staging.digitalregister.in:8080/api/v1/staff/get",
       {
         businessIds: [businessIds],
       }
     ).then((res) => setData(res.data.response));
-  }
+  };
 
   function deleteStaff(staffId) {
-    console.log(staffId);
     fetch(
       `http://stock.staging.digitalregister.in:8080/api/v1/staff/delete/${staffId}`,
       {
@@ -77,7 +77,7 @@ export default function StoreA() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map(({ staffId, name, mobile }) => (
+            {data.map(({ staffId, name, mobile, businessId }) => (
               <TableRow
                 key={staffId}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -87,10 +87,17 @@ export default function StoreA() {
                 </TableCell>
                 <TableCell align="right">{mobile}</TableCell>
                 <TableCell align="left">{role}</TableCell>
+
                 <TableCell align="right">
                   <Typography>
                     <Button>
-                      <EditStaffForm role="Change Role" />
+                      <EditStaffForm
+                        currentRole="Change Role"
+                        currentStaffId={staffId}
+                        currentName={name}
+                        currentCode={mobile.slice(0, 3)}
+                        currentMobile={mobile.slice(3)}
+                      />
                     </Button>
                     <Button
                       variant="outlined"
@@ -106,7 +113,14 @@ export default function StoreA() {
                       Remove Role
                     </Button>
                     <Button>
-                      <EditStaffForm role="Rename Role" />
+                      <EditStaffForm
+                        currentRole="Rename Role"
+                        currentStaffId={staffId}
+                        currentName={name}
+                        currentCode={mobile.slice(0, 3)}
+                        currentMobile={mobile.slice(3)}
+                        currentBusinessId={businessId}
+                      />
                     </Button>
                     <Button
                       variant="outlined"

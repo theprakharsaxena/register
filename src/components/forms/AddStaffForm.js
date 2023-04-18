@@ -49,12 +49,14 @@ const selectRole = [
 export default function AddStaffForm() {
   const [open, setOpen] = React.useState(false);
   const businessIds = "kbktbFmdvENXoEriN0UD7VboJET2";
+  const [code, setCode] = React.useState("+91");
   const [data, setData] = React.useState({
     businessId: businessIds,
     name: "",
     phone: "",
     staffId: "",
   });
+
   function handleChange(e) {
     const newData = { ...data };
     newData[e.target.name] = e.target.value;
@@ -68,11 +70,13 @@ export default function AddStaffForm() {
       {
         businessId: data.businessId,
         name: data.name,
-        phone: data.phone,
+        phone: `${code}${data.phone}`,
         staffId: data.staffId,
       }
     )
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -130,8 +134,8 @@ export default function AddStaffForm() {
                     placeholder="Select"
                     name="countryCode"
                     variant="outlined"
-                    value={data.countryCode}
-                    onChange={(e) => handleChange(e)}
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={9}>

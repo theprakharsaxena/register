@@ -10,6 +10,7 @@ import {
   Dialog,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import Axios from "axios";
 
 const selectStoreDropdown = [
   {
@@ -45,65 +46,44 @@ const selectRoleDropdown = [
   },
 ];
 
-export default function EditStaffForm({ role }) {
+export default function EditStaffForm({
+  currentRole,
+  currentStaffId,
+  currentName,
+  currentCode,
+  currentMobile,
+}) {
   const [open, setOpen] = React.useState(false);
-  const [staff, setStaff] = React.useState([]);
-  const [staffName, setStaffName] = React.useState("");
-  const [countryCode, setCountryCode] = React.useState("");
-  const [mobileNumber, setMobileNumber] = React.useState("");
-  const [selectStore, setSelectStore] = React.useState("");
-  const [selectRole, setSelectRole] = React.useState("");
-  const [staffId, setStaffId] = React.useState("");
-
-  React.useEffect(() => {
-    getStaffs();
-  }, []);
-
-  function getStaffs() {
-    fetch("http://localhost:5000/api/v1/staff").then((result) => {
-      result.json().then((res) => {
-        setStaff(res);
-        setStaffName(res[0].staffName);
-        setCountryCode(res[0].countryCode);
-        setMobileNumber(res[0].mobileNumber);
-        setSelectStore(res[0].selectStore);
-        setSelectRole(res[0].selectRole);
-        setStaffId(res[0]._id);
-      });
-    });
-  }
-
+  // const [staff, setStaff] = React.useState([]);
+  const [staffName, setStaffName] = React.useState(currentName);
+  const [countryCode, setCountryCode] = React.useState(currentCode);
+  const [mobileNumber, setMobileNumber] = React.useState(currentMobile);
+  const [staffId, setStaffId] = React.useState(currentStaffId);
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleUpdateandClose = () => {
     updateStaff();
+    handleClose();
   };
 
   const updateStaff = () => {
-    let item = {
-      staffName,
-      countryCode,
-      mobileNumber,
-      selectStore,
-      selectRole,
-      staffId,
-    };
-    console.log(item);
-    fetch(`http://localhost:5000/api/v1/staff/update/${staffId}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    }).then((result) => {
-      result.json().then((res) => {
-        console.warn(res);
-      });
-    });
+    Axios.post(
+      "http://stock.staging.digitalregister.in:8080/api/v1/staff/update",
+      {
+        businessId: "kbktbFmdvENXoEriN0UD7VboJET2",
+        name: staffName,
+        phone: `${countryCode}${mobileNumber}`,
+        staffId: staffId,
+      }
+    )
+      .then((response) => console.log(response.data))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -120,7 +100,7 @@ export default function EditStaffForm({ role }) {
         }}
         size="small"
       >
-        {role}
+        {currentRole}
       </Button>
       <Dialog onClose={handleClose} open={open} maxWidth="sm">
         <Grid
@@ -187,8 +167,8 @@ export default function EditStaffForm({ role }) {
                 placeholder="Select"
                 name="selectStore"
                 variant="outlined"
-                value={selectStore}
-                onChange={(e) => setSelectStore(e.target.value)}
+                // value={selectStore}
+                // onChange={(e) => setSelectStore(e.target.value)}
               >
                 {selectStoreDropdown.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -206,8 +186,8 @@ export default function EditStaffForm({ role }) {
                 placeholder="Select"
                 name="selectRole"
                 variant="outlined"
-                value={selectRole}
-                onChange={(e) => setSelectRole(e.target.value)}
+                // value={selectRole}
+                // onChange={(e) => setSelectRole(e.target.value)}
               >
                 {selectRoleDropdown.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -245,7 +225,7 @@ export default function EditStaffForm({ role }) {
             <Grid item xs={6} container spacing={2}>
               <Grid item xs={6}>
                 <Button
-                  type="reset"
+                  type="button"
                   fullWidth
                   variant="outlined"
                   size="large"
@@ -263,7 +243,7 @@ export default function EditStaffForm({ role }) {
                   variant="contained"
                   size="large"
                   sx={{ color: "#FFFFFF", bgcolor: "#1602FF" }}
-                  onClick={handleClose}
+                  onClick={handleUpdateandClose}
                 >
                   Save
                 </Button>

@@ -56,11 +56,10 @@ export default function EditStaffForm({
   currentMobile,
 }) {
   const [open, setOpen] = React.useState(false);
-  // const [staff, setStaff] = React.useState([]);
   const [staffName, setStaffName] = React.useState(currentName);
   const [countryCode, setCountryCode] = React.useState(currentCode);
   const [mobileNumber, setMobileNumber] = React.useState(currentMobile);
-  const [staffId, setStaffId] = React.useState(currentStaffId);
+  const staffId = currentStaffId;
   const handleClickOpen = () => {
     setOpen(true);
   };

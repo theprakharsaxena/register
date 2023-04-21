@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { createTheme, styled } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
-import { Button, Typography } from "@mui/material";
+import { Button, Input, Typography } from "@mui/material";
 import Axios from "axios";
 import EditStaffForm from "../forms/EditStaffForm";
 
@@ -31,11 +31,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-export default function StoreA() {
+export default function Stores({ store }) {
   const [data, setData] = React.useState([]);
   // const [response1, setResponse1] = React.useState([]);
   const [role, setRole] = React.useState("No Role");
   const businessIds = "kbktbFmdvENXoEriN0UD7VboJET2";
+
+  const handleRole=()=>{
+    setRole("No Role")
+  }
 
   React.useEffect(() => {
     getData();
@@ -66,6 +70,8 @@ export default function StoreA() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Typography sx={{my:"1rem"}}>This is the Inside the Store component, and to change the API key, we pass the props to retrieve specific store data.</Typography>
+      <Input defaultValue="Store A" sx={{color:"blue",mb:"1rem"}} value={store.name}></Input>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="scustomized table">
           <TableHead>
@@ -109,6 +115,7 @@ export default function StoreA() {
                         mx: 0.5,
                       }}
                       size="small"
+                      onClick={handleRole}
                     >
                       Remove Role
                     </Button>

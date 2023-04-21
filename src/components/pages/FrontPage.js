@@ -10,18 +10,45 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { Button, Grid, Stack } from "@mui/material";
-import StoreA from "../stores/StoreA";
-import StoreB from "../stores/StoreB";
-import StoreC from "../stores/StoreC";
 import AddStaffForm from "../forms/AddStaffForm";
-import StoreD from "../stores/StoreD";
+import Stores from "../stores/Stores";
 
 const drawerWidth = 150;
 
+const stores = [
+  { id: 1, name: "Store A" },
+  { id: 2, name: "Store B" },
+  { id: 3, name: "Store C" },
+  { id: 4, name: "Store D" },
+];
+
+const ColorButton = ({ label, isActive, onClick }) => {
+  const buttonStyle = {
+    backgroundColor: isActive ? '#1602FF' : '#FFFFFF',
+    color: isActive ? '#FFFFFF' : '#AB8484',
+    borderColor: isActive ? '#1602FF' : '#AB8484',
+    borderRadius: '50px',
+  };
+
+  return (
+    <Button style={buttonStyle} onClick={onClick} variant="outlined">
+      {isActive ? label : label}
+    </Button>
+  );
+};
+
 export default function FrontPage() {
-  const [active, setActive] = React.useState("store-a");
+  const [selectedStore, setSelectedStore] = React.useState("Store A");
   // const [activebtn, setActiveBtn] = React.useState("#1602FF");
-  
+  const [activeButton, setActiveButton] = React.useState("Store A");
+
+  const handleClick = (label) => {
+    setActiveButton(label);
+  };
+
+  const handleSelectStore = (store) => {
+    setSelectedStore(store);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -46,7 +73,7 @@ export default function FrontPage() {
             <Typography variant="h6" noWrap component="div">
               Manage Staff
             </Typography>
-            <AddStaffForm/>
+            <AddStaffForm />
           </Grid>
         </Toolbar>
       </AppBar>
@@ -89,52 +116,21 @@ export default function FrontPage() {
       >
         <Toolbar />
         <Stack spacing={2} direction="row">
-          <Button
-            onClick={() => setActive("store-a")}
-            variant="contained"
-            sx={{ borderRadius: " 50px", color: "#FFFFFF", bgcolor: "#1602FF" }}
-          >
-            Store A
-          </Button>
-          <Button
-            onClick={() => setActive("store-b")}
-            variant="outlined"
-            sx={{
-              borderRadius: " 50px",
-              color: "#AB8484",
-              borderColor: "#AB8484",
-            }}
-          >
-            STORE B
-          </Button>
-          <Button
-            onClick={() => setActive("store-c")}
-            variant="outlined"
-            sx={{
-              borderRadius: " 50px",
-              color: "#AB8484",
-              borderColor: "#AB8484",
-            }}
-          >
-            STORE C
-          </Button>
-          <Button
-            onClick={() => setActive("store-d")}
-            variant="outlined"
-            sx={{
-              borderRadius: " 50px",
-              color: "#AB8484",
-              borderColor: "#AB8484",
-            }}
-          >
-            STORE D
-          </Button>
+          {/* <StoreSelector stores={stores} onSelectStore={handleSelectStore} /> */}
+          {stores.map((store, id) => (
+            <ColorButton
+              key={id}
+              isActive={store.name === activeButton}
+              label={store.name}
+              onClick={() => {
+                handleSelectStore(store);
+                handleClick(store.name);
+              }}
+            />
+          ))}
         </Stack>
         <Box sx={{ flexGrow: 1, bgcolor: "background.default", py: 3 }}>
-          {active === "store-a" && <StoreA />}
-          {active === "store-b" && <StoreB />}
-          {active === "store-c" && <StoreC />}
-          {active === "store-d" && <StoreD />}
+          <Stores store={selectedStore} />
         </Box>
       </Box>
     </Box>

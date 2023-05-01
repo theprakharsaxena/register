@@ -66,7 +66,7 @@ export default function EditStaffForm({
     setOpen(false);
   };
 
-  const updateStaff = () => {
+  function updateStaff(){
     Axios.post(
       "http://stock.staging.digitalregister.in:8080/api/v1/staff/update",
       {

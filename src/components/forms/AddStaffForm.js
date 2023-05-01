@@ -62,8 +62,8 @@ export default function AddStaffForm() {
     newData[e.target.name] = e.target.value;
     setData(newData);
   }
-  
-  function handleSubmit(e) {
+
+  function handleUpdate() {
     Axios.post(
       "http://stock.staging.digitalregister.in:8080/api/v1/staff/add",
       {
@@ -77,7 +77,12 @@ export default function AddStaffForm() {
         console.log(res);
       })
       .catch((err) => console.log(err));
-    setOpen(!open)
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleUpdate();
+    setOpen(!open);
   }
 
   const handleClickOpen = () => {

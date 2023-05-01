@@ -80,7 +80,6 @@ export default function AddStaffForm() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
     handleUpdate();
     setOpen(!open);
   }

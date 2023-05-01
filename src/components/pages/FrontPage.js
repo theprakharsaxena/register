@@ -24,10 +24,10 @@ const stores = [
 
 const ColorButton = ({ label, isActive, onClick }) => {
   const buttonStyle = {
-    backgroundColor: isActive ? '#1602FF' : '#FFFFFF',
-    color: isActive ? '#FFFFFF' : '#AB8484',
-    borderColor: isActive ? '#1602FF' : '#AB8484',
-    borderRadius: '50px',
+    backgroundColor: isActive ? "#1602FF" : "#FFFFFF",
+    color: isActive ? "#FFFFFF" : "#AB8484",
+    borderColor: isActive ? "#1602FF" : "#AB8484",
+    borderRadius: "50px",
   };
 
   return (
@@ -116,7 +116,6 @@ export default function FrontPage() {
       >
         <Toolbar />
         <Stack spacing={2} direction="row">
-          {/* <StoreSelector stores={stores} onSelectStore={handleSelectStore} /> */}
           {stores.map((store, id) => (
             <ColorButton
               key={id}

@@ -62,9 +62,8 @@ export default function AddStaffForm() {
     newData[e.target.name] = e.target.value;
     setData(newData);
   }
-
+  
   function handleSubmit(e) {
-    e.preventDefault();
     Axios.post(
       "http://stock.staging.digitalregister.in:8080/api/v1/staff/add",
       {
@@ -75,9 +74,10 @@ export default function AddStaffForm() {
       }
     )
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
       })
       .catch((err) => console.log(err));
+    setOpen(!open)
   }
 
   const handleClickOpen = () => {
@@ -111,7 +111,7 @@ export default function AddStaffForm() {
           </Button>
         </Grid>
         <Box sx={{ bgcolor: "#F5F5F5", p: 2.5 }}>
-          <form method="post" onSubmit={(e) => handleSubmit(e)}>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Typography sx={{ color: "black" }}>Staff Name*</Typography>
@@ -235,7 +235,6 @@ export default function AddStaffForm() {
                     variant="contained"
                     size="large"
                     sx={{ bgcolor: "#1602FF" }}
-                    onClick={handleClose}
                   >
                     Save
                   </Button>

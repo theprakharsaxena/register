@@ -97,13 +97,13 @@ export default function Stores({ store }) {
                 <TableCell align="right">
                   <Typography>
                     <Button>
-                      <EditStaffForm
+                      {/* <EditStaffForm
                         currentRole="Change Role"
                         currentStaffId={staffId}
                         currentName={name}
                         currentCode={mobile.slice(0, 3)}
                         currentMobile={mobile.slice(3)}
-                      />
+                      /> */}
                     </Button>
                     <Button
                       variant="outlined"
@@ -120,14 +120,14 @@ export default function Stores({ store }) {
                       Remove Role
                     </Button>
                     <Button>
-                      <EditStaffForm
+                      {/* <EditStaffForm
                         currentRole="Rename Role"
                         currentStaffId={staffId}
                         currentName={name}
                         currentCode={mobile.slice(0, 3)}
                         currentMobile={mobile.slice(3)}
                         currentBusinessId={businessId}
-                      />
+                      /> */}
                     </Button>
                     <Button
                       variant="outlined"
